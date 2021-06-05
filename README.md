@@ -1,2 +1,2 @@
 # Aura-Class
-Aura Class, a mod for Terraria using tModloader
+Aura Class is a mod for tModloader that adds a new class: Aura
