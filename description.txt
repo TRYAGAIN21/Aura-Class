@@ -1,0 +1,41 @@
+The Aura Class is a new class that has the speciality of... crowd control!
+
+This mod currently has 2 subclasses: Auras and Waves.
+
+Auras will create a ring and damage enemies inside the ring and cannot knockback enemies...
+While Waves are controlled Auras that only partially cover an area, but deal more damage and can knockback enemies.
+
+It may or may not add Decay Rate.
+Decay Rate is for Auras and make the Aura deal less damage to enemies farther away from the center.
+
+Credit to Beancicle II for the idea, NoHaxJustXmod for expanding it, and TRYAGAIN211 for turning this idea into reality.
+
+Changelog:
+
+v0.2.0.3:
+Added Soil Aura. (Enable Joost Mod to craft)
+Aura Emblem can be used to craft the Avenger Emblem.
+Aura radius indicator is now a perfect circle.
+
+v0.2.0.2:
+Fixed Dust. (They were despawning too fast)
+
+v0.2.0.1: (Sorry, I am somehow bad at starting with v0.0.0.1)
+Added Radar Device.
+Added Sonar Device.
+Added Glow Armor.
+Added Luminous Powder.
+Nerfed the Sand Ball from Desert Sands.
+Auras can now get bigger through the use of accessories or armor.
+Aura radius is now much more clear.
+Fixed the Gold Aura creating Tungsten dust instead of Gold dust.
+Fixed the Aura Emblem dropping directly from the Wall of Flesh in Expert Mode. (This could allow you to get 2 Aura Emblems)
+Icon now works.
+
+v0.2:
+Added Aura Emblem.
+Added a Aura for each of the basic ores.
+Added a icon.
+
+v0.1:
+Released.
