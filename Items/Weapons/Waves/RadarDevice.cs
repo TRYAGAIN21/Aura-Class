@@ -34,7 +34,6 @@ namespace AuraClass.Items.Weapons.Waves
 
         public override bool CanUseItem(Player player)
         {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
             return player.ownedProjectileCounts[item.shoot] < 3;
         }
 
