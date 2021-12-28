@@ -1,3 +1,0 @@
-displayName = Aura Class
-author = TRYAGAIN211
-version = 0.2.0.3
