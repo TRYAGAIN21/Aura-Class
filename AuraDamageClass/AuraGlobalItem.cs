@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.Localization;
 
 namespace AuraClass.AuraDamageClass
 {
@@ -11,91 +14,52 @@ namespace AuraClass.AuraDamageClass
     {
         public override bool InstancePerEntity => true;
 
-        public byte Celestial;
-        public byte Mythic;
-        public byte Empowered;
-        public byte Mystic;
-        public byte Energized;
-        public byte Overworked;
-        public byte Crumbling;
-        public byte Broken;
-        public byte Decaying;
-        public byte Damaged;
-        public byte Scratched;
-        public byte Heavy;
-        public byte Stringless;
+        public int rangeBoostPrefix = 0;
+		public float decayMultPrefix = 1f;
+		public bool aura = false;
 
-        public AuraGlobalItem()
+		public override GlobalItem Clone(Item item, Item itemClone)
+		{
+			AuraGlobalItem myClone = (AuraGlobalItem)base.Clone(item, itemClone);
+			myClone.rangeBoostPrefix = rangeBoostPrefix;
+			myClone.decayMultPrefix = decayMultPrefix;
+			return myClone;
+		}
+
+		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
-            Celestial = 0;
-            Mythic = 0;
-            Empowered = 0;
-            Mystic = 0;
-            Energized = 0;
-            Overworked = 0;
-            Crumbling = 0;
-            Broken = 0;
-            Decaying = 0;
-            Damaged = 0;
-            Scratched = 0;
-            Heavy = 0;
-            Stringless = 0;
-            Aura = false;
-        }
+			AuraDamagePlayer modPlayer = AuraDamagePlayer.ModPlayer(player);
 
-        public override GlobalItem Clone(Item item, Item itemClone)
-        {
-            AuraGlobalItem myClone = (AuraGlobalItem)base.Clone(item, itemClone);
-            myClone.Celestial = Celestial;
-            myClone.Mythic = Mythic;
-            myClone.Empowered = Empowered;
-            myClone.Mystic = Mystic;
-            myClone.Energized = Energized;
-            myClone.Overworked = Overworked;
-            myClone.Crumbling = Crumbling;
-            myClone.Broken = Broken;
-            myClone.Decaying = Decaying;
-            myClone.Damaged = Damaged;
-            myClone.Scratched = Scratched;
-            myClone.Heavy = Heavy;
-            myClone.Stringless = Stringless;
-            return myClone;
-        }
+			/*if (item.type == 1301)
+            {
+				modPlayer.auraCrit += 8;
+			}
+			if (item.type == 1248)
+			{
+				modPlayer.auraCrit += 10;
+			}
+			if (item.type == 3015)
+			{
+				modPlayer.auraCrit += 5;
+			}
+			if (item.type == 1865 || item.type == 3110)
+			{
+				modPlayer.auraCrit += 2;
+			}
+			if ((item.type == 899 && Main.dayTime) || (item.type == 899 && (!Main.dayTime || Main.eclipse)))
+			{
+				modPlayer.auraCrit += 2;
+			}
+			if (item.prefix == 67)
+			{
+				modPlayer.auraCrit += 2;
+			}
+			if (item.prefix == 68)
+			{
+				modPlayer.auraCrit += 4;
+			}*/
+		}
 
-        public override void NetSend(Item item, BinaryWriter writer)
-        {
-            writer.Write((byte)Celestial);
-            writer.Write((byte)Mythic);
-            writer.Write((byte)Empowered);
-            writer.Write((byte)Mystic);
-            writer.Write((byte)Energized);
-            writer.Write((byte)Overworked);
-            writer.Write((byte)Crumbling);
-            writer.Write((byte)Broken);
-            writer.Write((byte)Decaying);
-            writer.Write((byte)Damaged);
-            writer.Write((byte)Scratched);
-            writer.Write((byte)Heavy);
-            writer.Write((byte)Stringless);
-        }
-
-        public override void NetReceive(Item item, BinaryReader reader)
-        {
-            Celestial = reader.ReadByte();
-            Mythic = reader.ReadByte();
-            Empowered = reader.ReadByte();
-            Mystic = reader.ReadByte();
-            Energized = reader.ReadByte();
-            Overworked = reader.ReadByte();
-            Crumbling = reader.ReadByte();
-            Broken = reader.ReadByte();
-            Decaying = reader.ReadByte();
-            Damaged = reader.ReadByte();
-            Scratched = reader.ReadByte();
-            Heavy = reader.ReadByte();
-            Stringless = reader.ReadByte();
-        }
-
-        public bool Aura { get; }
+		public bool Aura { get; }
     }
 }
