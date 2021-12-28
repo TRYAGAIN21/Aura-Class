@@ -8,14 +8,14 @@ using Terraria.ModLoader;
 
 namespace AuraClass.Projectiles
 {
-	public class BloodOrb : AuraProjectile
+	public class BloodOrb : ModProjectile
 	{
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Blood Orb");
 		}
 
-		public override void SafeSetDefaults() 
+		public override void SetDefaults() 
 		{
 			projectile.width = 14;
 			projectile.height = 14;
@@ -24,18 +24,9 @@ namespace AuraClass.Projectiles
 			projectile.tileCollide = false;
 		}
 
-		private const int Frame1 = 0;
-		private const int Frame2 = 1;
-
-		public override void SafeAI() 
+		public override void AI() 
 		{
-			Player player = Main.player[projectile.owner];
-
-			projectile.spriteDirection = projectile.direction;
-
-			Vector2 AuraPosition = player.Center;
-
-			Vector2 vectorToAuraPosition = AuraPosition - projectile.Center;
+			Vector2 vectorToAuraPosition = Main.player[projectile.owner].Center - projectile.Center;
 			float distanceToAuraPosition = vectorToAuraPosition.Length();
 
 			if (distanceToAuraPosition > 192f)

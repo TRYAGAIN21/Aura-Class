@@ -8,14 +8,19 @@ using Terraria.ModLoader;
 
 namespace AuraClass.Projectiles
 {
-	public class Sand : ModProjectile
+	public class Sand : AuraProjectile
 	{
+		public override bool UsesAuraAI() => false;
+
 		public override void SetStaticDefaults() 
 		{
+			Main.projFrames[projectile.type] = 9;
 			DisplayName.SetDefault("Sand Ball");
 		}
 
-		public override void SetDefaults() 
+		private const int BaseAuraRange = 20;
+
+		public override void SafeSetDefaults() 
 		{
 			projectile.width = 14;
 			projectile.height = 14;
@@ -23,23 +28,73 @@ namespace AuraClass.Projectiles
 			projectile.friendly = true;
 		}
 
-		public override void AI() 
+		private bool sandChoice;
+
+		public override void SafeAI()
 		{
-			Player player = Main.player[projectile.owner];
+			if (!sandChoice)
+			{
+				projectile.frame = Main.rand.Next(Main.projFrames[projectile.type]);
+				sandChoice = true;
+			}
 
 			projectile.spriteDirection = projectile.direction;
 
-			Vector2 AuraPosition = player.Center;
+			int RealRangeNormal = BaseAuraRange * 16;
+			int RealRangePrefix = auraRangePrefix * 16;
+			int RealRange = RealRangeNormal + RealRangePrefix;
 
-			Vector2 vectorToAuraPosition = AuraPosition - projectile.Center;
+			int RealPlayerRange = AuraDamagePlayer.ModPlayer(Main.player[projectile.owner]).auraSize * 16;
+
+			Projectile aura = Main.projectile[(int)projectile.ai[1]];
+			Vector2 vectorToAuraPosition = projectile.Center - aura.Center;
 			float distanceToAuraPosition = vectorToAuraPosition.Length();
 
-			if (distanceToAuraPosition > 192f)
+			if (distanceToAuraPosition > (RealRange + RealPlayerRange) / 2)
 			{
-				projectile.timeLeft = 0;
+				projectile.Kill();
 			}
 
-			projectile.rotation += 0.3f;
+			projectile.rotation += 0.3f * projectile.direction;
+		}
+
+		public override bool? SafeCanHitNPC(NPC target)
+		{
+			if (target.whoAmI != projectile.ai[0])
+			{
+				return false;
+			}
+			return true;
+		}
+
+		public override void Kill(int timeLeft)
+        {
+			if (projectile.frame != 7 - 1 && projectile.frame != 8 - 1)
+            {
+				for (int i = 0; i < 10; i++)
+				{
+                    if (projectile.frame != 9 - 1 && projectile.frame != 6 - 1)
+                    {
+                        Dust.NewDust(projectile.Center, 0, 0, 124, 0, 0, 100, Color.White, 1f);
+                    }
+					else if (projectile.frame != 5 - 1)
+					{
+						Dust.NewDust(projectile.Center, 0, 0, 233, 0, 0, 100, Color.White, 1f);
+					}
+					else
+                    {
+						Dust.NewDust(projectile.Center, 0, 0, 232, 0, 0, 100, Color.White, 1f);
+					}
+				}
+			}
+			else
+            {
+				for (int i = 0; i < 5; i++)
+				{
+					Dust.NewDust(projectile.Center, 0, 0, 233, 0, 0, 100, Color.White, 1f);
+					Dust.NewDust(projectile.Center, 0, 0, 232, 0, 0, 100, Color.White, 1f);
+				}
+			}
 		}
 	}
 }

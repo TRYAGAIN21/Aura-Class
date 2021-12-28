@@ -7,21 +7,20 @@ using Terraria.ModLoader;
 
 namespace AuraClass.Projectiles
 {
-	public class SonarDevice : WaveProjectile
+	public class SonarDevice : RadarProjectile
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Radar");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;    //The length of old position to be recorded
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
+			DisplayName.SetDefault("Sonar Wave");
 		}
 
 		public override void SafeSetDefaults() {
-			projectile.width = 20;
-			projectile.height = 20;
+			projectile.width = 16;
+			projectile.height = 16;
 			projectile.friendly = true;
 			projectile.penetrate = -1;
 			projectile.ignoreWater = true;
 			projectile.alpha = 255;
+			projectile.timeLeft = projectile.timeLeft / 8;
 		}
 
 		public int customCounter;
@@ -39,12 +38,10 @@ namespace AuraClass.Projectiles
 			Vector2 vectorToAuraPosition = AuraPosition - projectile.Center;
 			float distanceToAuraPosition = vectorToAuraPosition.Length();
 
-			if (distanceToAuraPosition > 384f)
+			if (distanceToAuraPosition > 38f * 16f)
 			{
 				projectile.timeLeft = 0;
 			}
-
-			Aura(projectile, 384, 92);
 
 			projectile.frameCounter = (projectile.frameCounter + 1) % 10;
 			if (projectile.frameCounter == 0)
@@ -60,13 +57,9 @@ namespace AuraClass.Projectiles
 			}
 		}
 
-		public override void Kill(int timeLeft)
-        {
-
-		}
-
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
+
 			if (projectile.velocity.X != oldVelocity.X)
 			{
 				projectile.velocity.X = -oldVelocity.X;
@@ -76,6 +69,12 @@ namespace AuraClass.Projectiles
 				projectile.velocity.Y = -oldVelocity.Y;
 			}
 			return false;
+		}
+
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			int debuffTime = 30;
+			target.AddBuff(ModContent.BuffType<Buffs.Tracked2>(), debuffTime * 60);
 		}
 	}
 }

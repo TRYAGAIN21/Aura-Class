@@ -11,15 +11,15 @@ namespace AuraClass.Items.Weapons.Auras
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wooden Aura");
-            Tooltip.SetDefault("Generates a Wooden Aura that will damage enemies inside it.");
+            //DisplayName.SetDefault("Wooden Aura");
+            //Tooltip.SetDefault("Generates a aura that will damage enemies inside it");
         }
 
         public override void SafeSetDefaults()
         {
-            item.damage = 6;
-            item.width = 32;
-            item.height = 32;
+            item.damage = 16;
+            item.width = 28;
+            item.height = 28;
             item.noMelee = true;
             item.useTime = 25;
             item.useAnimation = 25;
@@ -29,17 +29,8 @@ namespace AuraClass.Items.Weapons.Auras
             item.value = 0;
             item.rare = 0;
             item.shoot = mod.ProjectileType("WoodenAuraAura");
-        }
-
-        public override void SafeShoot()
-        {
-            return;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
-            return player.ownedProjectileCounts[item.shoot] < 1;
+            item.value = Item.sellPrice(0, 0, 0, 20);
+            decayRate = 1f;
         }
 
         public override void AddRecipes()

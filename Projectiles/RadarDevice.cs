@@ -7,28 +7,24 @@ using Terraria.ModLoader;
 
 namespace AuraClass.Projectiles
 {
-	public class RadarDevice : WaveProjectile
+	public class RadarDevice : RadarProjectile
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Radar");
-			ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;    //The length of old position to be recorded
-			ProjectileID.Sets.TrailingMode[projectile.type] = 0;        //The recording mode
+			DisplayName.SetDefault("Radar Wave");
 		}
 
 		public override void SafeSetDefaults() {
-			projectile.width = 20;
-			projectile.height = 20;
+			projectile.width = 16;
+			projectile.height = 16;
 			projectile.friendly = true;
 			projectile.penetrate = -1;
 			projectile.ignoreWater = true;
+			projectile.alpha = 255;
+			projectile.timeLeft = 300;
 		}
 
-		public int customCounter;
-
 		public override void SafeAI()
-        {
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-
+		{
 			Player player = Main.player[projectile.owner];
 
 			projectile.spriteDirection = projectile.direction;
@@ -43,12 +39,22 @@ namespace AuraClass.Projectiles
 				projectile.timeLeft = 0;
 			}
 
-			Aura(projectile, 384, mod.DustType("RadarDevice"));
-		}
-
-		public override void Kill(int timeLeft)
-        {
-
+			for (int num92 = 0; num92 < 5; num92++)
+			{
+				float num93 = projectile.velocity.X / 3f * (float)num92;
+				float num94 = projectile.velocity.Y / 3f * (float)num92;
+				int num95 = 4;
+				int num96 = Dust.NewDust(new Vector2(projectile.position.X + (float)num95, projectile.position.Y + (float)num95), projectile.width - num95 * 2, projectile.height - num95 * 2, mod.DustType("RadarDevice"), 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[num96].noGravity = true;
+				Dust dust15 = Main.dust[num96];
+				Dust dust2 = dust15;
+				dust2.velocity *= 0.1f;
+				dust15 = Main.dust[num96];
+				dust2 = dust15;
+				dust2.velocity += projectile.velocity * 0.1f;
+				Main.dust[num96].position.X -= num93;
+				Main.dust[num96].position.Y -= num94;
+			}
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
@@ -62,6 +68,12 @@ namespace AuraClass.Projectiles
 				projectile.velocity.Y = -oldVelocity.Y;
 			}
 			return false;
+		}
+
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			int debuffTime = 30;
+			target.AddBuff(ModContent.BuffType<Buffs.Tracked>(), debuffTime * 60);
 		}
 	}
 }

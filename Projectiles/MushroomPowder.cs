@@ -1,8 +1,16 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Terraria.Localization;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace AuraClass.Projectiles
 {
@@ -42,21 +50,49 @@ namespace AuraClass.Projectiles
 
 			if (projectile.owner == Main.myPlayer)
             {
-				Convert((int)(projectile.position.X + projectile.width) / 16, (int)(projectile.position.Y + projectile.height) / 16, 2);
+				int minTileX = (int)(projectile.position.X / 16f);
+				int maxTileX = (int)((projectile.position.X + projectile.width) / 16f);
+				int minTileY = (int)(projectile.position.Y / 16f);
+				int maxTileY = (int)((projectile.position.Y + projectile.height) / 16f);
+				if (minTileX < 0)
+				{
+					minTileX = 0;
+				}
+				if (maxTileX > Main.maxTilesX)
+				{
+					maxTileX = Main.maxTilesX;
+				}
+				if (minTileY < 0)
+				{
+					minTileY = 0;
+				}
+				if (maxTileY > Main.maxTilesY)
+				{
+					maxTileY = Main.maxTilesY;
+				}
+				for (int i = minTileX; i <= maxTileX; i++)
+				{
+					for (int j = minTileY; j <= maxTileY; j++)
+					{
+						if (Main.tile[i, j] != null && Main.tile[i, j].active() && Main.tile[i, j].type == (ushort)TileID.JungleGrass)
+						{
+							Main.tile[i, j].type = (ushort)TileID.MushroomGrass;
+						}
+					}
+				}
 			}
-		}
 
-		public void Convert(int i, int j, int size = 4) {
-			for (int k = i - size; k <= i + size; k++) {
-				for (int l = j - size; l <= j + size; l++) {
-					if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size)) {
-						int type = Main.tile[k, l].type;
-
-						//If the tile is Jungle Grass, convert to Mushroom Grass
-						if (type == TileID.JungleGrass) {
-							Main.tile[k, l].type = (ushort)TileID.MushroomGrass;
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1);
+			Rectangle hitbox = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
+			for (int num34 = 0; num34 < 200; num34++)
+			{
+				foreach (int i in UsefulInts.ConvertableZombies)
+				{
+					if (Main.npc[num34].type == i && Main.npc[num34].active)
+					{
+						Rectangle value3 = new Rectangle((int)Main.npc[num34].position.X, (int)Main.npc[num34].position.Y, Main.npc[num34].width, Main.npc[num34].height);
+						if (hitbox.Intersects(value3))
+						{
+							Main.npc[num34].Transform(Main.rand.NextBool() ? 255 : 254);
 						}
 					}
 				}

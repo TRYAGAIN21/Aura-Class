@@ -12,55 +12,18 @@ namespace AuraClass.Projectiles
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Aura");
+			DisplayName.SetDefault("Platinum Aura");
 		}
 
 		public override void SafeSetDefaults() {
 			projectile.extraUpdates = 0;
-			projectile.width = 320;
-			projectile.height = 320;
 			projectile.aiStyle = -1;
 			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.alpha = 255;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 25;
-		}
 
-		public int customCounter;
-
-		public override void SafeAI() 
-		{
-			Player projOwner = Main.player[projectile.owner];
-
-			AuraDamagePlayer modPlayer = AuraDamagePlayer.ModPlayer(projOwner);
-
-			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-
-			projOwner.heldProj = projectile.whoAmI;
-
-			projOwner.itemTime = projOwner.itemAnimation;
-
-			projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
-
-			if (!projOwner.channel)
-			{
-				projectile.Kill();
-			}
-
-			Aura(projectile, 320 / 2 + modPlayer.auraSize * 16, mod.DustType("PlatinumAuraDust"));
-		}
-
-		private void UpdatePlayer(Player player)
-		{
-			// Multiplayer support here, only run this code if the client running it is the owner of the projectile
-			if (projectile.owner == Main.myPlayer)
-			{
-				projectile.netUpdate = true;
-				player.itemTime = 10; // Set item time to 2 frames while we are used
-				player.itemAnimation = 10; // Set item animation time to 2 frames while we are used
-			}
+			dustType = 11;
+			auraRange = 22;
 		}
 	}
 }

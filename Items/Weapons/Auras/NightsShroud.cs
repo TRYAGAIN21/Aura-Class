@@ -11,15 +11,15 @@ namespace AuraClass.Items.Weapons.Auras
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Night's Shroud");
-            Tooltip.SetDefault("");
+            //DisplayName.SetDefault("Night's Shroud");
+            //Tooltip.SetDefault("A secondary aura made of smoke will form and confuse enemies that enter it");
         }
 
         public override void SafeSetDefaults()
         {
             item.damage = 20;
-            item.width = 32;
-            item.height = 32;
+            item.width = 36;
+            item.height = 36;
             item.noMelee = true;
             item.useTime = 24;
             item.useAnimation = 24;
@@ -29,17 +29,9 @@ namespace AuraClass.Items.Weapons.Auras
             item.value = 0;
             item.rare = 1;
             item.shoot = mod.ProjectileType("NightsShroudAura");
-        }
-
-        public override void SafeShoot()
-        {
-            return;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
-            return player.ownedProjectileCounts[item.shoot] < 1;
+            item.GetGlobalItem<NormalGlobalItem>().glowmaskTex = ModContent.GetTexture("AuraClass/Items/Weapons/Auras/NightsShroud_Mask");
+            item.value = Item.sellPrice(0, 0, 30, 0);
+            decayRate = 0.2f;
         }
 
         public override void AddRecipes()

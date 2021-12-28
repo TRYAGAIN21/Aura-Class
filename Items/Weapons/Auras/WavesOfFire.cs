@@ -11,8 +11,10 @@ namespace AuraClass.Items.Weapons.Auras
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Waves of Fire");
-            Tooltip.SetDefault("10% chance to inflict On Fire!");
+            //DisplayName.SetDefault("Waves of Fire");
+            //Tooltip.SetDefault("Has a chance to set enemies on fire" +
+            //    "\nCannot set fire to enemies through walls" +
+            //   "\nA Wave of Fire will be created every few seconds");
         }
 
         public override void SafeSetDefaults()
@@ -29,17 +31,9 @@ namespace AuraClass.Items.Weapons.Auras
             item.value = 0;
             item.rare = 3;
             item.shoot = mod.ProjectileType("WavesOfFireAura");
-        }
-
-        public override void SafeShoot()
-        {
-            return;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
-            return player.ownedProjectileCounts[item.shoot] < 1;
+            item.GetGlobalItem<NormalGlobalItem>().glowmaskTex = ModContent.GetTexture("AuraClass/Items/Weapons/Auras/WavesOfFire_Mask");
+            item.value = Item.sellPrice(0, 0, 60, 0);
+            decayRate = 0.6f;
         }
 
         public override void AddRecipes()

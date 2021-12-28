@@ -7,23 +7,23 @@ using Terraria.ModLoader;
 
 namespace AuraClass.Items.Materials
 {
-    public class DarkEnergyFragment : AuraItem
+    public class DarkEnergyFragment : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Energy Fragment");
-            Tooltip.SetDefault("'The essence of the void lingers in this fragment'");
+            //DisplayName.SetDefault("Dark Energy Fragment");
+            //Tooltip.SetDefault("'The essence of the void lingers within this fragment'");
             ItemID.Sets.ItemIconPulse[item.type] = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
-        public override void SafeSetDefaults()
+        public override void SetDefaults()
         {
             item.width = 28;
             item.height = 28;
             item.maxStack = 999;
-            item.value = 0;
             item.rare = 9;
+            item.value = Item.sellPrice(0, 0, 20, 0);
         }
 
         public override void PostUpdate()

@@ -8,6 +8,11 @@ namespace AuraClass.Items.Weapons.Auras
 {
     public class TestAura : AuraItem
     {
+        public override bool Autoload(ref string name)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Test Aura");
@@ -29,25 +34,6 @@ namespace AuraClass.Items.Weapons.Auras
             item.rare = 10;
             item.shoot = mod.ProjectileType("TestAuraAura");
             item.noUseGraphic = true;
-        }
-
-        public override void HoldItem(Player player)
-        {
-            player.immune = true;
-            player.immuneNoBlink = true;
-            player.immuneTime = 20;
-            player.noFallDmg = true;
-            player.statLife++;
-        }
-        public override void SafeShoot()
-        {
-            return;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
-            return player.ownedProjectileCounts[item.shoot] < 1;
         }
     }
 }

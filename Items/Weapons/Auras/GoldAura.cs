@@ -11,8 +11,8 @@ namespace AuraClass.Items.Weapons.Auras
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gold Aura");
-            Tooltip.SetDefault("Generates a Gold Aura that will damage enemies inside it.");
+            //DisplayName.SetDefault("Gold Aura");
+            //Tooltip.SetDefault("");
         }
 
         public override void SafeSetDefaults()
@@ -29,17 +29,8 @@ namespace AuraClass.Items.Weapons.Auras
             item.value = 0;
             item.rare = 1;
             item.shoot = mod.ProjectileType("GoldAuraAura");
-        }
-
-        public override void SafeShoot()
-        {
-            return;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
-            return player.ownedProjectileCounts[item.shoot] < 1;
+            item.value = Item.sellPrice(0, 0, 20, 0);
+            decayRate = 0.3f;
         }
 
         public override void AddRecipes()

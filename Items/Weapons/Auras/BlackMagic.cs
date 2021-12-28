@@ -11,8 +11,8 @@ namespace AuraClass.Items.Weapons.Auras
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Black Magic");
-            Tooltip.SetDefault("'Dark magic can also be used by even the purest of heroes'");
+            //DisplayName.SetDefault("Black Magic");
+            //Tooltip.SetDefault("'Dark magic can also be used by even the purest of heroes'");
         }
 
         public override void SafeSetDefaults()
@@ -29,17 +29,9 @@ namespace AuraClass.Items.Weapons.Auras
             item.value = 0;
             item.rare = 2;
             item.shoot = mod.ProjectileType("BlackMagicAura");
-        }
-
-        public override void SafeShoot()
-        {
-            return;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            // Ensures no more than one spear can be thrown out, use this when using autoReuse
-            return player.ownedProjectileCounts[item.shoot] < 1;
+            item.GetGlobalItem<NormalGlobalItem>().glowmaskTex = ModContent.GetTexture("AuraClass/Items/Weapons/Auras/BlackMagic_Mask");
+            item.value = Item.sellPrice(0, 2, 0, 0);
+            decayRate = 0.5f;
         }
     }
 }

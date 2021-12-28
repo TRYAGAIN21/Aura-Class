@@ -11,25 +11,34 @@ namespace AuraClass.Items.Weapons.Waves
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sonar Device");
-            Tooltip.SetDefault("");
+            //DisplayName.SetDefault("Sonar Device");
+            //Tooltip.SetDefault("Enemies hit by this will be tracked and will be dealt more damage if hit" +
+            //    "\nThis weapon and the Radar Device does not recieve this damage increase");
             Item.staff[item.type] = true;
         }
 
         public override void SafeSetDefaults()
         {
-            item.damage = 67;
+            item.damage = 84;
             item.width = 34;
             item.height = 38;
             item.noMelee = true;
-            item.useTime = 24;
-            item.useAnimation = 24;
+            item.useTime = 34;
+            item.useAnimation = 34;
             item.autoReuse = true;
             item.useStyle = 5;
             item.value = 0;
             item.rare = 5;
             item.shoot = mod.ProjectileType("SonarDevice");
+            item.value = Item.sellPrice(0, 5, 0, 0);
             item.shootSpeed = 10f;
+
+            item.GetGlobalItem<NormalGlobalItem>().glowmaskTex = ModContent.GetTexture("AuraClass/Items/Weapons/Waves/SonarDevice_Mask");
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            return true;
         }
 
         public override void AddRecipes()

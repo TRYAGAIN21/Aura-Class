@@ -6,19 +6,21 @@ namespace AuraClass.Dusts
 {
 	public class RadarDevice : ModDust
     {
-
 		public override bool Update(Dust dust)
 		{
-			dust.position += dust.velocity;
-			dust.rotation += dust.velocity.X * 0.15f;
-			dust.scale *= 0.99f;
-			float light = 1f * dust.scale;
-			Lighting.AddLight(dust.position, light, light, light);
-			if (dust.scale < 0.75f)
+			float num13 = dust.scale * 0.5f;
+			if (num13 > 1f)
 			{
-				dust.active = false;
+				num13 = 1f;
 			}
-			return false;
+			float num14 = num13;
+			float num15 = num13;
+			float num16 = num13;
+			num14 *= 0f;
+			num15 *= 0.25f;
+			num16 *= 1f;
+			Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), num13 * num14, num13 * num15, num13 * num16);
+			return true;
 		}
 	}
 }

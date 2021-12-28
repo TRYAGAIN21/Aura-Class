@@ -13,7 +13,7 @@ namespace AuraClass
 			if (context == "bossBag")
 			{
 				if (Main.rand.NextBool(4 / 2) && arg == ItemID.QueenBeeBossBag)
-                                {
+                {
 					player.QuickSpawnItem(mod.ItemType("HiveAura"));
 				}
 				if (Main.rand.NextBool(4 / 2) && arg == ItemID.WallOfFleshBossBag)

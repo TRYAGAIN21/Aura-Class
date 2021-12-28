@@ -12,83 +12,41 @@ namespace AuraClass.Projectiles
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Aura");
+			DisplayName.SetDefault("Hive Aura");
 		}
 
-		public override void SafeSetDefaults() {
+		private int beeTimer;
+
+		public override void SafeSetDefaults() 
+		{
 			projectile.extraUpdates = 0;
-			projectile.width = 384;
-			projectile.height = 384;
 			projectile.aiStyle = -1;
 			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.scale = 1f;
-			projectile.alpha = 255;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 27;
+
+			dustType = 152;
+			auraRange = 36;
 		}
 
-		public int customCounter;
-		public int beeTimer;
-
-		public override void SafeAI() 
+		public override bool PreAI() 
 		{
-			Player projOwner = Main.player[projectile.owner];
-
-			AuraDamagePlayer modPlayer = AuraDamagePlayer.ModPlayer(projOwner);
-
-			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-
-			projOwner.heldProj = projectile.whoAmI;
-
-			projOwner.itemTime = projOwner.itemAnimation;
-
-			projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
-
-			if (!projOwner.channel)
-			{
-				projectile.Kill();
-			}
-
-			Aura(projectile, 384 / 2 + modPlayer.auraSize * 16, mod.DustType("HiveAuraDust"));
-
-
 			beeTimer++;
-
 			if (beeTimer > 100)
             {
 				beeTimer = 0;
             }
 
-			if (projOwner.ownedProjectileCounts[mod.ProjectileType("HiveBee1")] < 1 && beeTimer > 20)
+			if (Main.player[projectile.owner].ownedProjectileCounts[mod.ProjectileType("HiveBee")] < 15 && beeTimer > 30 && (!Main.player[projectile.owner].wet || Main.player[projectile.owner].honeyWet))
             {
-				Projectile.NewProjectile(projOwner.position.X, projOwner.position.Y, 5, 0, mod.ProjectileType("HiveBee1"), projectile.damage, 0f, projectile.owner, 0f, 0f);
+				for (int r = 0; r < Main.rand.Next(2, 3); ++r)
+                {
+					Projectile.NewProjectile(Main.player[projectile.owner].position, new Vector2(Main.rand.NextFloat(7.5f, -7.5f), Main.rand.NextFloat(7.5f, -7.5f)), mod.ProjectileType("HiveBee"), projectile.damage, 0f, projectile.owner, 0f, 0f);
+				}
 				beeTimer = 0;
 			}
 
-			if (projOwner.ownedProjectileCounts[mod.ProjectileType("HiveBee2")] < 1 && beeTimer > 20)
-			{
-				Projectile.NewProjectile(projOwner.position.X, projOwner.position.Y, -5, 0, mod.ProjectileType("HiveBee2"), projectile.damage, 0f, projectile.owner, 0f, 0f);
-				beeTimer = 0;
-			}
-
-			if (projOwner.ownedProjectileCounts[mod.ProjectileType("HiveBee3")] < 1 && beeTimer > 20)
-			{
-				Projectile.NewProjectile(projOwner.position.X, projOwner.position.Y, 0, -5, mod.ProjectileType("HiveBee3"), projectile.damage, 0f, projectile.owner, 0f, 0f);
-				beeTimer = 0;
-			}
-		}
-
-		private void UpdatePlayer(Player player)
-		{
-			// Multiplayer support here, only run this code if the client running it is the owner of the projectile
-			if (projectile.owner == Main.myPlayer)
-			{
-				projectile.netUpdate = true;
-				player.itemTime = 10; // Set item time to 2 frames while we are used
-				player.itemAnimation = 10; // Set item animation time to 2 frames while we are used
-			}
+			return true;
 		}
 	}
 }

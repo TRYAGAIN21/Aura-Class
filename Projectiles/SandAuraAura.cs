@@ -12,99 +12,62 @@ namespace AuraClass.Projectiles
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Aura");
+			DisplayName.SetDefault("Desert Aura");
 		}
 
 		public override void SafeSetDefaults() {
 			projectile.extraUpdates = 0;
-			projectile.width = 384;
-			projectile.height = 384;
 			projectile.aiStyle = -1;
 			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.scale = 1f;
-			projectile.alpha = 255;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 19;
+
+			dustType = 124;
+			auraRange = 20;
 		}
 
-		public int customCounter;
-		public int sandTimer;
+		private int sandTimer;
+		private int Counter;
 
-		public float shootSpeed;
-
-        public override void SafeAI() 
+		public override void SafeAI()
 		{
-			Player projOwner = Main.player[projectile.owner];
+			int RealRangeNormal = auraRange * 16;
+			int RealRangePrefix = auraRangePrefix * 16;
+			int RealRange = RealRangeNormal + RealRangePrefix;
 
-			AuraDamagePlayer modPlayer = AuraDamagePlayer.ModPlayer(projOwner);
+			int RealPlayerRange = AuraDamagePlayer.ModPlayer(Main.player[projectile.owner]).auraSize * 16;
 
-			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-
-			projOwner.heldProj = projectile.whoAmI;
-
-			projOwner.itemTime = projOwner.itemAnimation;
-
-			projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
-
-			if (!projOwner.channel)
-			{
-				projectile.Kill();
-			}
-
-			shootSpeed = 8f;
-
-			Aura(projectile, 384 / 2 + modPlayer.auraSize * 16, mod.DustType("SandAuraDust"));
-
-			Vector2 move = Vector2.Zero;
-			float distance = 193f;
-			bool target = false;
-			for (int k = 0; k < 200; k++)
-			{
-				NPC npc = Main.npc[k];
-
-				Vector2 targetPos = npc.Center;
-
-				if (npc.active && !npc.dontTakeDamage && !npc.friendly && npc.lifeMax > 5)
+			sandTimer++;
+			if (sandTimer > 60)
+            {
+				for (int k = 0; k < Main.maxNPCs; k++)
 				{
-					Vector2 newMove = targetPos - projOwner.Center;
-					float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-					if (distanceTo < distance)
+					if (Counter > 2)
+                    {
+						Counter = 0;
+						break;
+                    }
+					NPC npc = Main.npc[k];
+
+					if (npc.CanBeChasedBy(this) && Collision.CanHitLine(Main.player[projectile.owner].Center, 1, 1, npc.Center, 1, 1))
 					{
-						move = newMove;
-						distance = distanceTo;
-						target = true;
+						Vector2 vectorToTargetPosition = npc.Center - projectile.Center;
+						float distanceToTargetPosition = vectorToTargetPosition.Length();
+
+						if (distanceToTargetPosition <= (RealRange + RealPlayerRange) / 2)
+						{
+							vectorToTargetPosition.Normalize();
+							vectorToTargetPosition *= 8f;
+
+							Counter += 1;
+
+							Projectile.NewProjectile(Main.player[projectile.owner].Center + npc.velocity, vectorToTargetPosition, mod.ProjectileType("Sand"), 20, 0f, Main.myPlayer, npc.whoAmI, projectile.whoAmI);
+						}
 					}
 				}
-			}
-			if (target)
-			{
-				sandTimer++;
-				if (sandTimer > 60)
-                {
-					move.Normalize();
-					move *= shootSpeed;
-
-					Projectile.NewProjectile(projOwner.Center.X, projOwner.Center.Y, move.X, move.Y, mod.ProjectileType("Sand"), 20, 0f, Main.myPlayer, 0f, 0f);
-					sandTimer = 0;
-				}
-			}
-			else
-            {
 				sandTimer = 0;
-            }
-        }
-
-		private void UpdatePlayer(Player player)
-		{
-			// Multiplayer support here, only run this code if the client running it is the owner of the projectile
-			if (projectile.owner == Main.myPlayer)
-			{
-				projectile.netUpdate = true;
-				player.itemTime = 10; // Set item time to 2 frames while we are used
-				player.itemAnimation = 10; // Set item animation time to 2 frames while we are used
 			}
-		}
+			else { Counter = 0; }
+        }
 	}
 }

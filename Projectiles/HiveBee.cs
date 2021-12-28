@@ -1,5 +1,6 @@
 ﻿using AuraClass.AuraDamageClass;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
 using Terraria;
@@ -8,118 +9,192 @@ using Terraria.ModLoader;
 
 namespace AuraClass.Projectiles
 {
-	public class HiveBee1 : ModProjectile
+	public class HiveBee : AuraProjectile
 	{
+		public override bool UsesAuraAI() => false;
+
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Bee");
-			Main.projFrames[projectile.type] = 2;
+			DisplayName.SetDefault("Hive Bee");
+			Main.projFrames[projectile.type] = 4;
 		}
 
-		public override void SetDefaults() 
+		private const int BaseAuraRange = 36;
+
+		private int num;
+		private int num2;
+
+		public override void SafeSetDefaults() 
 		{
 			projectile.width = 10;
 			projectile.height = 10;
 			projectile.aiStyle = -1;
 			projectile.friendly = true;
-			projectile.tileCollide = false;
+			projectile.penetrate = 3;
+			projectile.maxPenetrate = 3;
+			projectile.timeLeft = 600;
 		}
 
-		private const int Frame1 = 0;
-		private const int Frame2 = 1;
+		private Vector2 position;
 
-		public override void AI() 
+		public override bool PreAI() 
 		{
 			Player player = Main.player[projectile.owner];
 
-			if (!player.channel)
-			{
-				projectile.Kill();
+			if (projectile.ai[0] == 0f)
+            {
+				position = player.Center;
+				projectile.ai[0] = 1f;
 			}
 
-			projectile.spriteDirection = projectile.direction;
+			int RealRangeNormal = BaseAuraRange * 16;
+			int RealRangePrefix = auraRangePrefix * 16;
+			int RealRange = RealRangeNormal + RealRangePrefix;
 
-			Vector2 idlePosition = player.Center;
-			Vector2 AuraPosition = player.Center;
-			idlePosition.X += 96f;
+			int RealPlayerRange = AuraDamagePlayer.ModPlayer(Main.player[projectile.owner]).auraSize * 16;
 
-			float distanceFromTarget = 192f;
-			Vector2 targetCenter = projectile.position;
-			bool foundTarget = false;
-
-			Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
-			float distanceToIdlePosition = vectorToIdlePosition.Length();
-
-			Vector2 vectorToAuraPosition = AuraPosition - projectile.Center;
-			float distanceToAuraPosition = vectorToAuraPosition.Length();
-
-			if (!foundTarget)
+			bool target = false;
+			Vector2 targetCenter = projectile.Center;
+			Vector2 targetSize = projectile.Size;
+			Vector2 targetPosition = projectile.position;
+			projectile.ai[0] += 1f;
+			if (projectile.ai[0] > 30f)
 			{
-				// This code is required either way, used for finding a target
-				for (int i = 0; i < Main.maxNPCs; i++)
+				projectile.ai[0] = 30f;
+				for (int k = 0; k < Main.maxNPCs; k++)
 				{
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy())
+					NPC npc = Main.npc[k];
+
+					if (npc.CanBeChasedBy(projectile) && (!npc.wet || npc.honeyWet))
 					{
-						float between = Vector2.Distance(npc.Center, projectile.Center);
-						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
-						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 2000f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
+						float distance2TargetPosition = (npc.Center - player.Center).Length();
+
+						if (distance2TargetPosition <= (RealRange + RealPlayerRange) / 2)
 						{
-							distanceFromTarget = between;
+							target = true;
 							targetCenter = npc.Center;
-							foundTarget = true;
+							targetSize = npc.Size;
 						}
 					}
 				}
 			}
 
+			if (!player.channel || projectile.wet && !projectile.honeyWet)
+			{
+				projectile.Kill();
+			}
+			else
+            {
+				projectile.timeLeft = 2;
+            }
+
+			projectile.spriteDirection = projectile.direction;
+
+			float distanceToTargetPosition = (targetCenter - player.Center).Length();
+
+			if (!target)
+            {
+				num2++;
+				if (num2 > 120)
+                {
+					position = player.Center + new Vector2(Main.rand.NextFloat((RealRange + RealPlayerRange) / 2, -((RealRange + RealPlayerRange) / 2)), Main.rand.NextFloat((RealRange + RealPlayerRange) / 2, -((RealRange + RealPlayerRange) / 2)));
+					num2 = 0;
+                }
+            }
+			
+			if ((position - player.Center).Length() > (RealRange + RealPlayerRange) / 2 || !Collision.CanHitLine(projectile.Center, 1, 1, position, 1, 1))
+			{
+				for (int r = 0; r < 1000; r++)
+                {
+					if (Collision.CanHitLine(projectile.Center, 1, 1, position, 1, 1) && (position - player.Center).Length() <= (RealRange + RealPlayerRange) / 2)
+                    {
+						break;
+                    }
+					position = player.Center + new Vector2(Main.rand.NextFloat((RealRange + RealPlayerRange) / 2, -((RealRange + RealPlayerRange) / 2)), Main.rand.NextFloat((RealRange + RealPlayerRange) / 2, -((RealRange + RealPlayerRange) / 2)));
+				}
+			}
+
+			Vector2 vectorToIdlePosition = position - projectile.Center;
+			float distanceToIdlePosition = vectorToIdlePosition.Length();
+
+			Vector2 vectorToAuraPosition = player.Center - projectile.Center;
+			float distanceToAuraPosition = vectorToAuraPosition.Length();
+
 			float speed = 8f;
 			float inertia = 20f;
 
-			if (foundTarget && distanceToAuraPosition < 192f && distanceFromTarget < 192f)
+			if (target && distanceToAuraPosition <= (RealRange + RealPlayerRange) / 2 && distanceToTargetPosition <= (RealRange + RealPlayerRange) / 2)
 			{
-				// Minion has a target: attack (here, fly towards the enemy)
-				if (distanceFromTarget > 40f)
-				{
-					// The immediate range around the target (so it doesn't latch onto it when close)
-					Vector2 direction = targetCenter - projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
+				if (Collision.CanHitLine(projectile.Center, 1, 1, targetCenter, (int)targetSize.X, (int)targetSize.Y))
+                {
+					float num382 = 6f;
+					float num383 = 0.1f;
+
+					Vector2 vector35 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
+					float num384 = targetCenter.X - vector35.X;
+					float num385 = targetCenter.Y - vector35.Y;
+					float num386 = (float)Math.Sqrt(num384 * num384 + num385 * num385);
+					float num387 = num386;
+					num386 = num382 / num386;
+					num384 *= num386;
+					num385 *= num386;
+					if (projectile.velocity.X < num384)
+					{
+						projectile.velocity.X += num383;
+						if (projectile.velocity.X < 0f && num384 > 0f)
+						{
+							projectile.velocity.X += num383 * 2f;
+						}
+					}
+					else if (projectile.velocity.X > num384)
+					{
+						projectile.velocity.X -= num383;
+						if (projectile.velocity.X > 0f && num384 < 0f)
+						{
+							projectile.velocity.X -= num383 * 2f;
+						}
+					}
+					if (projectile.velocity.Y < num385)
+					{
+						projectile.velocity.Y += num383;
+						if (projectile.velocity.Y < 0f && num385 > 0f)
+						{
+							projectile.velocity.Y += num383 * 2f;
+						}
+					}
+					else if (projectile.velocity.Y > num385)
+					{
+						projectile.velocity.Y -= num383;
+						if (projectile.velocity.Y > 0f && num385 < 0f)
+						{
+							projectile.velocity.Y -= num383 * 2f;
+						}
+					}
 				}
 			}
 			else
 			{
-				// Minion doesn't have a target: return to player and idle
-				if (distanceToAuraPosition > 192f)
+				if (!Collision.CanHitLine(projectile.Center, 1, 1, player.position, player.width, player.height)) { num++; if (num > 180) { projectile.tileCollide = false; } }
+                else { num = 0; projectile.tileCollide = true; }
+
+				if (distanceToAuraPosition > (RealRange + RealPlayerRange) / 2)
 				{
-					// Speed up the minion if it's away from the player
 					speed = 20f;
 					inertia = 60f;
 				}
 				else
 				{
-					// Slow down the minion if closer to the player
 					speed = 4f;
 					inertia = 80f;
 				}
 				if (distanceToIdlePosition > 40f)
 				{
-					// The immediate range around the player (when it passively floats about)
-
-					// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
 					vectorToIdlePosition.Normalize();
 					vectorToIdlePosition *= speed;
 					projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
 				}
 				else if (projectile.velocity == Vector2.Zero)
 				{
-					// If there is a case where it's not moving at all, give it a little "poke"
 					projectile.velocity.X = -0.15f;
 					projectile.velocity.Y = -0.05f;
 				}
@@ -128,294 +203,69 @@ namespace AuraClass.Projectiles
 			projectile.rotation = projectile.velocity.X * 0.05f;
 
 			projectile.frameCounter++;
-
-			if (projectile.frameCounter < 5)
+			if (projectile.frameCounter > 5)
 			{
-				projectile.frame = Frame1;
-			}
-			else if (projectile.frameCounter < 10)
-			{
-				projectile.frame = Frame2;
-			}
-			else
-			{
-				projectile.frameCounter = 0;
-				projectile.frame = Frame1;
-			}
-		}
-	}
-
-	public class HiveBee2 : ModProjectile
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Bee");
-			Main.projFrames[projectile.type] = 2;
-		}
-
-		public override void SetDefaults()
-		{
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.aiStyle = -1;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-		}
-
-		private const int Frame1 = 0;
-		private const int Frame2 = 1;
-
-		public override void AI()
-		{
-			Player player = Main.player[projectile.owner];
-
-			if (!player.channel)
-			{
-				projectile.Kill();
-			}
-
-			projectile.spriteDirection = projectile.direction;
-
-			Vector2 idlePosition = player.Center;
-			Vector2 AuraPosition = player.Center;
-			idlePosition.X -= 96f;
-
-			float distanceFromTarget = 192f;
-			Vector2 targetCenter = projectile.position;
-			bool foundTarget = false;
-
-			Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
-			float distanceToIdlePosition = vectorToIdlePosition.Length();
-
-			Vector2 vectorToAuraPosition = AuraPosition - projectile.Center;
-			float distanceToAuraPosition = vectorToAuraPosition.Length();
-
-			if (!foundTarget)
-			{
-				// This code is required either way, used for finding a target
-				for (int i = 0; i < Main.maxNPCs; i++)
+				projectile.frame++;
+				if (projectile.frame > 3)
 				{
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy())
+					projectile.frame = 0;
+				}
+				projectile.frameCounter = 0;
+			}
+			return true;
+		}
+
+		public override void Kill(int timeLeft)
+		{
+			for (int num421 = 0; num421 < 6; num421++)
+			{
+				int num422 = Dust.NewDust(projectile.position, projectile.width, projectile.height, Main.halloween ? ModContent.DustType<Dusts.Zombee>() : 150, projectile.velocity.X, projectile.velocity.Y, 50);
+				Main.dust[num422].noGravity = true;
+				Main.dust[num422].scale = 1f;
+			}
+		}
+
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
+			if (oldVelocity.X != projectile.velocity.X)
+			{
+				projectile.velocity.X = -oldVelocity.X * 0.2f;
+			}
+			if (oldVelocity.Y != projectile.velocity.Y)
+			{
+				projectile.velocity.Y = -oldVelocity.Y * 0.2f;
+			}
+			return false;
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Mod mod = ModLoader.GetMod("AuraClass");
+
+			int textureFrames = Main.projFrames[projectile.type];
+			Texture2D texture = ModContent.GetTexture("AuraClass/Projectiles/HiveBee");
+			Rectangle textureRect = new Rectangle(0, projectile.frame * (texture.Height / textureFrames), (texture.Width), (texture.Height / textureFrames));
+			Vector2 textureVect = new Vector2((float)texture.Width / 2, (float)(texture.Height / (2 * textureFrames)));
+			for (int i = 0; i < (Main.halloween ? 2 : 1); i++)
+			{
+				lightColor = Lighting.GetColor((int)(projectile.Center.X / 16), (int)(projectile.Center.Y / 16));
+				if (Main.halloween)
+				{
+					texture = ModContent.GetTexture("AuraClass/Projectiles/HiveBee_Zombee");
+					lightColor = Lighting.GetColor((int)(projectile.Center.X / 16), (int)(projectile.Center.Y / 16));
+					if (i == 1)
 					{
-						float between = Vector2.Distance(npc.Center, projectile.Center);
-						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
-						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 2000f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
-						{
-							distanceFromTarget = between;
-							targetCenter = npc.Center;
-							foundTarget = true;
-						}
+						texture = ModContent.GetTexture("AuraClass/Projectiles/HiveBee_Zombee_Mask");
+						lightColor = Color.White;
+						if (texture == null)
+							break;
 					}
+					lightColor *= ((255 - projectile.alpha) / 255f);
 				}
+
+				spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle?(textureRect), lightColor, projectile.rotation, textureVect, projectile.scale, projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			}
-
-			float speed = 8f;
-			float inertia = 20f;
-
-			if (foundTarget && distanceToAuraPosition < 192f && distanceFromTarget < 192f)
-			{
-				// Minion has a target: attack (here, fly towards the enemy)
-				if (distanceFromTarget > 40f)
-				{
-					// The immediate range around the target (so it doesn't latch onto it when close)
-					Vector2 direction = targetCenter - projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
-				}
-			}
-			else
-			{
-				// Minion doesn't have a target: return to player and idle
-				if (distanceToAuraPosition > 192f)
-				{
-					// Speed up the minion if it's away from the player
-					speed = 20f;
-					inertia = 60f;
-				}
-				else
-				{
-					// Slow down the minion if closer to the player
-					speed = 4f;
-					inertia = 80f;
-				}
-				if (distanceToIdlePosition > 40f)
-				{
-					// The immediate range around the player (when it passively floats about)
-
-					// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
-					vectorToIdlePosition.Normalize();
-					vectorToIdlePosition *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
-				}
-				else if (projectile.velocity == Vector2.Zero)
-				{
-					// If there is a case where it's not moving at all, give it a little "poke"
-					projectile.velocity.X = -0.15f;
-					projectile.velocity.Y = -0.05f;
-				}
-			}
-
-			projectile.rotation = projectile.velocity.X * 0.05f;
-
-			projectile.frameCounter++;
-
-			if (projectile.frameCounter < 5)
-			{
-				projectile.frame = Frame1;
-			}
-			else if (projectile.frameCounter < 10)
-			{
-				projectile.frame = Frame2;
-			}
-			else
-			{
-				projectile.frameCounter = 0;
-				projectile.frame = Frame1;
-			}
-		}
-	}
-
-	public class HiveBee3 : ModProjectile
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Bee");
-			Main.projFrames[projectile.type] = 2;
-		}
-
-		public override void SetDefaults()
-		{
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.aiStyle = -1;
-			projectile.friendly = true;
-			projectile.tileCollide = false;
-		}
-
-		private const int Frame1 = 0;
-		private const int Frame2 = 1;
-
-		public override void AI()
-		{
-			Player player = Main.player[projectile.owner];
-
-			if (!player.channel)
-			{
-				projectile.Kill();
-			}
-
-			projectile.spriteDirection = projectile.direction;
-
-			Vector2 idlePosition = player.Center;
-			Vector2 AuraPosition = player.Center;
-			idlePosition.Y -= 96f;
-
-			float distanceFromTarget = 192f;
-			Vector2 targetCenter = projectile.position;
-			bool foundTarget = false;
-
-			Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
-			float distanceToIdlePosition = vectorToIdlePosition.Length();
-
-			Vector2 vectorToAuraPosition = AuraPosition - projectile.Center;
-			float distanceToAuraPosition = vectorToAuraPosition.Length();
-
-			if (!foundTarget)
-			{
-				// This code is required either way, used for finding a target
-				for (int i = 0; i < Main.maxNPCs; i++)
-				{
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy())
-					{
-						float between = Vector2.Distance(npc.Center, projectile.Center);
-						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
-						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 2000f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
-						{
-							distanceFromTarget = between;
-							targetCenter = npc.Center;
-							foundTarget = true;
-						}
-					}
-				}
-			}
-
-			float speed = 8f;
-			float inertia = 20f;
-
-			if (foundTarget && distanceToAuraPosition < 192f && distanceFromTarget < 192f)
-			{
-				// Minion has a target: attack (here, fly towards the enemy)
-				if (distanceFromTarget > 40f)
-				{
-					// The immediate range around the target (so it doesn't latch onto it when close)
-					Vector2 direction = targetCenter - projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
-				}
-			}
-			else
-			{
-				// Minion doesn't have a target: return to player and idle
-				if (distanceToAuraPosition > 192f)
-				{
-					// Speed up the minion if it's away from the player
-					speed = 20f;
-					inertia = 60f;
-				}
-				else
-				{
-					// Slow down the minion if closer to the player
-					speed = 4f;
-					inertia = 80f;
-				}
-				if (distanceToIdlePosition > 40f)
-				{
-					// The immediate range around the player (when it passively floats about)
-
-					// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
-					vectorToIdlePosition.Normalize();
-					vectorToIdlePosition *= speed;
-					projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
-				}
-				else if (projectile.velocity == Vector2.Zero)
-				{
-					// If there is a case where it's not moving at all, give it a little "poke"
-					projectile.velocity.X = -0.15f;
-					projectile.velocity.Y = -0.05f;
-				}
-			}
-
-			projectile.rotation = projectile.velocity.X * 0.05f;
-
-			projectile.frameCounter++;
-
-			if (projectile.frameCounter < 5)
-			{
-				projectile.frame = Frame1;
-			}
-			else if (projectile.frameCounter < 10)
-			{
-				projectile.frame = Frame2;
-			}
-			else
-			{
-				projectile.frameCounter = 0;
-				projectile.frame = Frame1;
-			}
+			return false;
 		}
 	}
 }

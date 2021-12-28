@@ -4,13 +4,100 @@ This mod currently has 2 subclasses: Auras and Waves.
 
 Auras will create a ring and damage enemies inside the ring and cannot knockback enemies...
 While Waves are controlled Auras that only partially cover an area, but deal more damage and can knockback enemies.
+Note: No waves are currently in the mod.
 
-It may or may not add Decay Rate.
-Decay Rate is for Auras and make the Aura deal less damage to enemies farther away from the center.
+Another feature is decay rate and is for Auras and make the Aura deal less damage to enemies farther away from the center.
 
 Credit to Beancicle II for the idea, NoHaxJustXmod for expanding it, and TRYAGAIN211 for turning this idea into reality.
+Also thanks for Glitchz123 for adding the idea of an aura, Black Magic, somehow I love testing things with it!
 
 Changelog:
+
+v0.3.0 "Improve, Expand, and Decay":
+Changed Auras:
+• Will no longer deal damage to enemies outside the circle.
+• Deals reduced damage to enemies through blocks, exception is the spectre aura coming in the next minor update.
+• Auras no longer deal damage while the player using it is cursed or frozen, but still can be used, and dust will change accordingly.
+• You can no longer use auras while Stoned/Petrified.
+• Added decay rate, a feature that took months to figure out.
+
+Added Items:
+• Magnifying Glass
+• Magmafying Glass
+• The Irradiator
+• The Corrosion
+• Cobalt Aura
+• Palladium Aura
+• Mythril Aura
+• Orichalcum Aura
+• Adamantite Aura
+• Titanium Aura
+• Holy Radiance
+• Toxifying Mist
+• Chlorophyte Field
+• Photosynthifying Glass
+• Jungle Blossom
+• Temple's Guard
+• Shrimpy Bubble
+• Hyperspace Aura
+• Dark Energy Armor
+• Moon Rock
+
+Items Changes:
+• Blood Gem has been renamed to Blood Orb.
+• Added an ability to Waves of Fire.
+• Added an ability to Night's Shroud.
+• Added an ability to Blood Orb.
+• Added an ability to Radar Device.
+• Added an ability to Sonar Device.
+• Buffed Sonar Device.
+• Desert Sands now fires multiple sand balls and no longer shoots sand at enemies behind walls.
+• Reworked The Bee Hive.
+• Aura Range for all weapons has been changed.
+• Nerfed Glow Armor's Crafting Recipe and defense.
+• Buffed Glow Armor by making it increase aura damage.
+• Nerfed Radar Device's Crafting Recipe.
+• Buffed Wooden Aura.
+
+Updated Sprites:
+• Radar Device
+• Sonar Device
+• Night's Shroud
+• Blood Orb
+• Waves of Fire
+• Black Magic
+• Wooden Aura
+• The Bee Hive
+• Desert Sands
+• Glow Armor
+• Dark Energy Fragment
+• Aura Emblem
+• Luminous Powder
+• The Mod's Icon
+
+Bug Fixes:
+• Fixed a bug where Luminous Powder would sometimes not convert jungle to mushroom.
+• Fixed a bug where players could use multiple auras at once.
+• Fixed a bug where auras could not inflict critical hits.
+
+Misc:
+• Removed Test Aura.
+• Desert Sands's Sand Ball now comes in many different visual variants.
+• Removed a few prefixes but added the some more.
+• Luminous Powder will now convert some enemies to their mushroom counterparts.
+• Soil Aura no longer appears unless Joost Mod is loaded.
+• The Dark Energy Fragment is now obtainable.
+• Increased Desert Sands drop rate.
+• A lot of items now have a glowmask.
+• All items now have a sell price.
+• Black Magic can now be obtained from golden lock boxes.
+• Doubled drop rate of Aura Class items from bosses.
+• Many items that increased crit chance now supports aura class crit, including buffs.
+• Added support to another language, simplified chinese. (Translations were created through google translate, so some translations may be rough)
+• The dungeon now generates 2 chests both containing black magic instead of placing black magic in a chest already containing a weapon.
+• Glow Armor now glows, glowing brighter the more pieces of the set you have equipped.
+• The Bee Hive's item and projectile sprite changes during halloween season. (Use something like fargo's mod config to change it at anytime).
+• Added a crafting recipe for all tombstones.
 
 v0.2.0.3:
 Added Soil Aura. (Enable Joost Mod to craft)

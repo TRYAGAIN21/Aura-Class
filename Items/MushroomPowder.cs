@@ -10,8 +10,8 @@ namespace AuraClass.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Luminous Powder");
-            Tooltip.SetDefault("Spreads the fungus");
+            //DisplayName.SetDefault("Luminous Powder");
+            //Tooltip.SetDefault("Spreads the fungus");
         }
 
         public override void SetDefaults()
@@ -27,7 +27,8 @@ namespace AuraClass.Items
             item.useAnimation = 15;
             item.useTime = 15;
             item.noMelee = true;
-            item.value = 75;
+            item.GetGlobalItem<NormalGlobalItem>().glowmaskTex = ModContent.GetTexture("AuraClass/Items/MushroomPowder_Mask");
+            item.value = Item.sellPrice(0, 1, 0, 0);
         }
     }
 }
