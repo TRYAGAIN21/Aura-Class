@@ -213,3 +213,4 @@ namespace AuraClass.AuraDamageClass
 		public bool Aura { get; } = true;
 	}
 }
+
