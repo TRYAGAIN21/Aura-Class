@@ -1,0 +1,68 @@
+# Spanish translation file
+
+# Commons
+#######
+Common.Tooltips.IncreasesAuraDamage=Increases aura damage
+Common.Tooltips.IncreasedAuraDamage=increased aura damage
+Common.Tooltips.IncreasesAuraCritChance=Increases click critical strike chance
+Common.Tooltips.IncreasedAuraSpeed=increased aura attack speed
+Common.Tooltips.IncreasesAuraRange=aura range
+
+# Weapons
+#######
+
+# Accessories
+#######
+ItemName.AuraEmblem=Aura Emblem
+ItemTooltip.AuraEmblem=15% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.MagnifyingGlass=Magnifying Glass
+ItemTooltip.MagnifyingGlass=Auras will be accompanied by a concentrated beam of light\nThe beam spans the length of your current aura\nWill inflict on fire and is smaller while in daylight but will deal more damage\nDeals reduced damage while in moonlight but will inflict frostburn and is bigger\nDoes not activate while undergound
+
+ItemName.MagmafyingGlass=Magmafying Glass
+ItemTooltip.MagmafyingGlass=Auras will be accompanied by a concentrated beam of light\nThe beam spans 50% longer than the length of your current aura\nDoes not activate while underground\nCan activate while in the underworld\nThis beam will slowly aim towards the cursor\nInflicts on fire
+
+ItemName.PhotosynthifyingGlass=Photosynthifying Glass
+ItemTooltip.PhotosynthifyingGlass=Auras will be accompanied by a concentrated beam of light\nThe beam spans double the length of your current aura\nDoes not activate while undergound unless you are standing in enough light\nCan activate while in the underworld\nThis beam will quickly aim towards the cursor
+
+# Armors
+#######
+
+ItemName.DarkEnergyHelmet=Dark Energy Helmet
+ItemTooltip.DarkEnergyHelmet=+12 {$Mods.AuraClass.Common.Tooltips.IncreasesAuraRange}\n17% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraSpeed}
+
+ItemName.DarkEnergyBreastplate=Dark Energy Breastplate
+ItemTooltip.DarkEnergyBreastplate=27% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.DarkEnergyLeggings=Dark Energy Leggings
+ItemTooltip.DarkEnergyLeggings=10% increased movement speed
+SetBonus.DarkEnergy=A small aura will form while no weapons are being used\nThe aura's damage depends on your current health, dealing reduced damage with less health\nThe aura will vanish after taking damage, reforming after 4 seconds
+
+# Misc
+#######
+ItemName.DarkEnergyFragment=Dark Energy Fragment
+ItemTooltip.DarkEnergyFragment='The essence of the void lingers within this fragment'
+
+ItemName.MushroomPowder=Luminous Powder
+ItemTooltip.MushroomPowder=Spreads the fungus
+
+# Projectiles
+#######
+
+# NPCs
+#######
+
+# Prefixes
+#######
+Prefix.Relentless==Relentless
+Prefix.Empowered==Empowered
+Prefix.Energized==Energized
+Prefix.Menacing==Menacing
+Prefix.Lively==Lively
+Prefix.Compact==Compact
+Prefix.Fading==Fading
+Prefix.Unsynthesized==Unsynthesized
+
+# Tooltips
+#######
+Tooltip.AuraDamage=aura

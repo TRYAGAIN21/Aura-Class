@@ -1,0 +1,179 @@
+# English translation file
+
+# Commons
+#######
+Common.Tooltips.IncreasesAuraDamage=Increases aura damage
+Common.Tooltips.IncreasedAuraDamage=increased aura damage
+Common.Tooltips.IncreasesAuraCritChance=Increases aura critical strike chance
+Common.Tooltips.IncreasedAuraSpeed=increased aura attack speed
+Common.Tooltips.IncreasesAuraRange=aura range
+Common.Tooltips.DecayRate=decay rate
+
+# Weapons
+#######
+ItemName.AdamantiteAura=Adamantite Aura
+ItemTooltip.AdamantiteAura=Players inside this aura will temporarily have increased aura range for 10 seconds\nThis effect always applies to the player wielding the aura\nThis aura does not receive this effect
+
+ItemName.BlackMagic=Black Magic
+ItemTooltip.BlackMagic='Dark magic can also be used by even the purest of heroes'
+
+ItemName.ChlorophyteField=Chlorophyte Field
+ItemTooltip.ChlorophyteField=Rapidly spews spores in random directions
+
+ItemName.CobaltAura=Cobalt Aura
+ItemTooltip.CobaltAura=Players inside this aura will temporarily have increased aura damage for 10 seconds\nThis effect always applies to the player wielding the aura\nThis aura does not receive this effect
+
+ItemName.CopperAura=Copper Aura
+
+ItemName.CrimsonAura=Blood Orb
+ItemTooltip.CrimsonAura=Sometimes creates flesh balls and sends them towards 5 nearby enemies
+
+ItemName.DirtAura=Soil Aura
+ItemTooltip.DirtAura=Does 1 more damage for every 666 blocks of dirt in your inventory\nUsing this weapon constantly consumes dirt equal to 1/50th of the damage bonus
+
+ItemName.GoldAura=Gold Aura
+
+ItemName.HiveAura=The Bee Hive
+ItemTooltip.HiveAura='Can you bee-leive it?'
+
+ItemName.HolyRadiance=Holy Radiance
+ItemTooltip.HolyRadiance=Weak enemies inside the aura will be completely stopped\nEnemies with more than 1250 Max Life are immune to this effect\nEnemies with 80% Knockback Resistance or more are also immune to this effect
+
+ItemName.HyperspaceAura=Hyperspace Aura
+ItemTooltip.HyperspaceAura=Creates up to three hyperspace beams that home in on a nearby enemy and then split\n'Fracture your enemies with energy from a galaxy far, far away'
+
+ItemName.IronAura=Iron Aura
+
+ItemName.JungleBlossom=Jungle Blossom
+ItemTooltip.JungleBlossom=Creates homing flower vines every 8 seconds\nCreates 4 flowers every second that slow down and then fires their petals\nThese flowers also redirect themselves towards a nearby enemy after firing petals\nThese vines last for 6 seconds and also split every 2 seconds
+
+ItemName.LeadAura=Lead Aura
+
+ItemName.MythrilAura=Mythril Aura
+ItemTooltip.MythrilAura=Players inside this aura will temporarily have increased aura attack speed for 10 seconds\nThis effect always applies to the player wielding the aura\nThis aura does not receive this effect
+
+ItemName.NightsShroud=Night's Shroud
+ItemTooltip.NightsShroud=A secondary aura made of smoke will form and confuse enemies that enter it
+
+ItemName.OrichalcumAura=Orichalcum Aura
+ItemTooltip.OrichalcumAura=Rapidly spews petals in a rotating pattern
+
+ItemName.PalladiumAura=Palladium Aura
+ItemTooltip.PalladiumAura=Players and friendly npcs inside this aura will have increased life regen\nThis effect always applies to the player wielding the aura
+
+ItemName.PlatinumAura=Platinum Aura
+
+ItemName.SandAura=Desert Sands
+ItemTooltip.SandAura=Sometimes shoots multiple sand balls at 3 nearby enemies
+
+ItemName.ShrimpyBubble=Shrimpy Bubble
+ItemTooltip.ShrimpyBubble=Sometimes sends 5 sharkrons toward your opponents\nSharkrons ignore half of the enemy's defense and the aura ignores all defense\nInsanely good against multiple targets
+
+ItemName.SilverAura=Silver Aura
+
+ItemName.TemplesGuard=Temple's Guard
+ItemTooltip.TemplesGuard=Fires fireballs at up to 5 nearby enemies\nWhen attacked and below 50% health you will fire a laser towards the attacker\nIf hit by a projectile it will fire towards the nearest enemy
+
+ItemName.TinAura=Tin Aura
+
+ItemName.TitaniumAura=Titanium Aura
+ItemTooltip.TitaniumAura=A defensive aura of titanium shards will generate after being hit\nTitanium shards shatter after 10 seconds\nTitanium shards home in when they are about to shatter\nYour immunity frames are increased while using this aura
+
+ItemName.ToxifyingMist=Toxifying Mist
+ItemTooltip.ToxifyingMist=Summons Lil' Apparitions to fight for you\n5 apparitions will create auras and float around outside the main aura\n'Guaranteed to scare, or your life back!'
+
+ItemName.TungstenAura=Tungsten Aura
+
+ItemName.WavesOfFire=Waves of Fire
+ItemTooltip.WavesOfFire=Has a chance to set enemies on fire\nCannot set fire to enemies through walls\nA Wave of Fire will be created every few seconds
+
+ItemName.WoodenAura=Wooden Aura
+ItemTooltip.WoodenAura=Generates a aura that will damage enemies inside it
+
+ItemName.RadarDevice=Radar Device
+ItemTooltip.RadarDevice=Enemies hit by this will be tracked and will be dealt more damage if hit\nThis weapon and the {$Mods.AuraClass.ItemName.SonarDevice} does not recieve this damage increase
+
+ItemName.SonarDevice=Sonar Device
+ItemTooltip.SonarDevice=Enemies hit by this will be tracked and will be dealt more damage if hit\nThis weapon and the {$Mods.AuraClass.ItemName.RadarDevice} does not recieve this damage increase
+
+ItemName.MoonRock=Moon Rock
+ItemTooltip.MoonRock=Meteors will rain down from the sky and explode into stars\nIgnores all defense\n'One giant rock for mankind'
+
+ItemName.TheRadiator=The Irradiator
+ItemTooltip.TheRadiator=Inflicts foes with irradiated which lasts for a while\nIrradiated acts identically to cursed inferno\nDuration of irradiated is decreased when hitting an enemy behind walls\nCursed flames will quickly burst from enemies that are irradiated
+
+ItemName.TheCorrosion=The Corrosion
+ItemTooltip.TheCorrosion=Inflicts foes with corroding which lasts for a while\nCorroding acts identically to ichor\nDuration of corroding is decreased when hitting an enemy behind walls\nA blood cloud will stalk and fire ichor at enemies that are corroding
+
+# Accessories
+#######
+ItemName.AuraEmblem=Aura Emblem
+ItemTooltip.AuraEmblem=15% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.MagnifyingGlass=Magnifying Glass
+ItemTooltip.MagnifyingGlass=Auras will be accompanied by a concentrated beam of light\nThe beam spans the length of your current aura\nWill inflict on fire and is smaller while in daylight but will deal more damage\nDeals reduced damage while in moonlight but will inflict frostburn and is bigger\nDoes not activate while undergound
+
+ItemName.MagmafyingGlass=Magmafying Glass
+ItemTooltip.MagmafyingGlass=Auras will be accompanied by a concentrated beam of light\nThe beam spans 50% longer than the length of your current aura\nDoes not activate while underground\nCan activate while in the underworld\nThis beam will slowly aim towards the cursor\nInflicts on fire
+
+ItemName.PhotosythifyingGlass=Photosythifying Glass
+ItemTooltip.PhotosythifyingGlass=Auras will be accompanied by a concentrated beam of light\nThe beam spans double the length of your current aura\nDoes not activate while undergound unless you are standing in enough light\nCan activate while in the underworld\nThis beam will quickly aim towards the cursor
+
+# Armors
+#######
+
+ItemName.DarkEnergyHelmet=Dark Energy Helmet
+ItemTooltip.DarkEnergyHelmet=+12 {$Mods.AuraClass.Common.Tooltips.IncreasesAuraRange}\n17% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraSpeed}
+
+ItemName.DarkEnergyBreastplate=Dark Energy Breastplate
+ItemTooltip.DarkEnergyBreastplate=27% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.DarkEnergyLeggings=Dark Energy Leggings
+ItemTooltip.DarkEnergyLeggings=10% increased movement speed
+SetBonus.DarkEnergy=A small aura will form, dealing massive damage to anyone inside it\nThe aura's damage depends on your current health, dealing reduced damage with less health\nThe aura will also expand and bypass more of the enemy's armor the lower your health\nThe aura will vanish after taking damage, reforming after 4 seconds
+
+ItemName.GlowHat=Glow Hat
+ItemTooltip.GlowHat=7% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.GlowPants=Glow Pants
+ItemTooltip.GlowPants=7% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.GlowShirt=Glow Shirt
+ItemTooltip.GlowShirt=7% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+SetBonus.Glow=+6 {$Mods.AuraClass.Common.Tooltips.IncreasesAuraRange}
+
+# Misc
+#######
+ItemName.DarkEnergyFragment=Dark Energy Fragment
+ItemTooltip.DarkEnergyFragment='The essence of the void lingers within this fragment'
+
+ItemName.MushroomPowder=Luminous Powder
+ItemTooltip.MushroomPowder=Spreads the fungus
+
+# Projectiles
+#######
+
+# NPCs
+#######
+NPCName.FragmentationSlime=Fragmentation Slime
+NPCName.FragmentSlime=Fragmented Slime
+Common.Slime.SlimeSolar=Solar Slime
+Common.Slime.SlimeVortex=Vortex Slime
+Common.Slime.SlimeNebula=Nebula Slime
+Common.Slime.SlimeStardust=Stardust Slime
+Common.Slime.SlimeDarkEnergy=Dark Energy Slime
+
+# Prefixes
+#######
+Prefix.Relentless=Relentless
+Prefix.Empowered=Empowered
+Prefix.Energized=Energized
+Prefix.Menacing=Menacing
+Prefix.Lively=Lively
+Prefix.Compact=Compact
+Prefix.Fading=Fading
+Prefix.Unsynthesized=Unsynthesized
+
+# Tooltips
+#######
+Tooltip.AuraDamage=aura

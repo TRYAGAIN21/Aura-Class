@@ -1,0 +1,166 @@
+# Simplified Chinese translation file
+
+# Commons
+#######
+Common.Tooltips.IncreasesAuraDamage=增加光环伤害
+Common.Tooltips.IncreasedAuraDamage=增加光环伤害
+Common.Tooltips.IncreasesAuraCritChance=增加光环暴击率
+Common.Tooltips.IncreasedAuraSpeed=增加光环攻击速度
+Common.Tooltips.IncreasesAuraRange=光环范围
+
+# Weapons
+#######
+ItemName.AdamantiteAura=精金光环
+ItemTooltip.AdamantiteAura=处于此光环内的玩家将暂时增加光环范围，持续 10 秒\n此效果始终适用于持有光环的玩家\n这个光环没有这个效果
+
+ItemName.BlackMagic=黑魔法
+ItemTooltip.BlackMagic='即使是最纯粹的英雄也可以使用黑魔法'
+
+ItemName.ChlorophyteField=叶绿领域
+ItemTooltip.ChlorophyteField=向随机方向快速喷出孢子
+
+ItemName.CobaltAura=钴光环
+ItemTooltip.CobaltAura=处于此光环内的玩家会暂时增加光环伤害，持续 10 秒\n此效果始终适用于持有光环的玩家\n这个光环没有这个效果
+
+ItemName.CopperAura=铜光环
+
+ItemName.CrimsonAura=血珠
+ItemTooltip.CrimsonAura=有时会制造肉球并将它们发送到附近的 5 个敌人
+
+ItemName.DirtAura=土壤光环
+ItemTooltip.DirtAura=库存中每 666 块泥土造成 1 点额外伤害\n使用此武器会持续消耗相当于伤害加成 1/50 的泥土
+
+ItemName.GoldAura=金光环
+
+ItemName.HiveAura=蜂巢
+ItemTooltip.HiveAura='你能把它养蜂吗？'
+
+ItemName.HolyRadiance=圣光
+ItemTooltip.HolyRadiance=光环内的弱敌将被彻底阻止\n最大生命值超过 1250 的敌人免疫此效果\n具有 80% 或更高击退抗性的敌人也免疫此效果
+
+ItemName.HyperspaceAura=超空间光环
+ItemTooltip.HyperspaceAura=创建最多三个超空间光束, 瞄准附近的敌人然后分裂\n'用来自遥远星系的能量粉碎你的敌人'
+
+ItemName.IronAura=钢铁光环
+
+ItemName.JungleBlossom=丛林之花
+ItemTooltip.JungleBlossom=每 8 秒产生一次归巢花藤\n每秒产生 4 朵花，它们会减速然后发射花瓣\n这些花在发射花瓣后也会将自己重定向到附近的敌人\n这些藤蔓持续 6 秒，每 2 秒分裂一次
+
+ItemName.LeadAura=铅光环
+
+ItemName.MythrilAura=秘银光环
+ItemTooltip.MythrilAura=处于此光环内的玩家会暂时增加光环攻击速度，持续 10 秒\n此效果始终适用于持有光环的玩家\n这个光环没有这个效果
+
+ItemName.NightsShroud=夜之裹尸布
+ItemTooltip.NightsShroud=由烟雾构成的次级光环会形成并迷惑进入它的敌人
+
+ItemName.OrichalcumAura=山铜光环
+ItemTooltip.OrichalcumAura=以旋转的方式快速喷出花瓣
+
+ItemName.PalladiumAura=钯金光环
+ItemTooltip.PalladiumAura=在这个光环内的玩家和友好的NPC将增加生命恢复\n此效果始终适用于持有光环的玩家
+
+ItemName.PlatinumAura=白金光环
+
+ItemName.SandAura=沙漠沙
+ItemTooltip.SandAura=有时会向附近的 3 个敌人发射多个沙球
+
+ItemName.ShrimpyBubble=虾泡
+ItemTooltip.ShrimpyBubble=有时会向你的对手发送 5 个鲨鱼\n鲨鱼龙无视敌人一半防御，光环无视所有防御\n对多个目标非常好
+
+ItemName.SilverAura=银色光环
+
+ItemName.TemplesGuard=圣殿守卫
+ItemTooltip.TemplesGuard=向附近最多 5 个敌人发射火球\n当受到攻击且生命值低于 50% 时，您将向攻击者发射激光\n如果被射弹击中，它将向最近的敌人开火
+
+ItemName.TinAura=锡光环
+
+ItemName.TitaniumAura=钛光环
+ItemTooltip.TitaniumAura=被击中后会产生钛碎片的防御光环\n钛碎片在 10 秒后破碎\n钛碎片在即将破碎时归巢\n使用此光环时，您的免疫框架会增加
+
+ItemName.ToxifyingMist=毒雾
+ItemTooltip.ToxifyingMist=召唤小幽灵为你而战\n5个幻影会创造光环并漂浮在主光环之外\n'保证吓到你，不然你的命回来了！'
+
+ItemName.TungstenAura=钨光环
+
+ItemName.WavesOfFire=火波
+ItemTooltip.WavesOfFire=有几率使敌人着火\n不能通过墙壁向敌人放火\n每隔几秒就会产生一波火波
+
+ItemName.WoodenAura=木灵气
+ItemTooltip.WoodenAura=产生会伤害其中的敌人的光环
+
+ItemName.RadarDevice=雷达装置
+ItemTooltip.RadarDevice=被此击中的敌人将被跟踪和将要理更多的损害如果打\n这把武器和{$Mods.AuraClass.ItemName.SonarDevice}不会受到这种伤害增加
+
+ItemName.SonarDevice=声纳装置
+ItemTooltip.SonarDevice=被此击中的敌人将被跟踪和将要理更多的损害如果打\n这把武器和{$Mods.AuraClass.ItemName.RadarDevice}不会受到这种伤害增加
+
+# Accessories
+#######
+ItemName.AuraEmblem=光环徽记
+ItemTooltip.AuraEmblem=15% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.MagnifyingGlass=放大镜
+ItemTooltip.MagnifyingGlass=光环将伴随着一束集中的光束\n光束跨越你当前光环的长度\n会着火并且在白天时较小但会造成更多伤害\n在月光下造成的伤害降低，但会造成冻伤，而且伤害更大\n在地下时不会激活
+
+ItemName.MagmafyingGlass=岩浆玻璃
+ItemTooltip.MagmafyingGlass=光环将伴随着一束集中的光束\n光束跨越你当前光环的长度\n光束的跨度比你当前光环的长度长 50%\n在地下时不会激活\n可以在冥界激活\n此光束将慢慢对准光标\n造成火灾
+
+ItemName.PhotosythifyingGlass=光合玻璃
+ItemTooltip.PhotosythifyingGlass=光环将伴随着一束集中的光束\n光束跨越你当前光环长度的两倍\n除非你站在足够的光线下，否则不会在地下激活\n可以在冥界激活\n该光束将快速瞄准光标
+
+# Armors
+#######
+
+ItemName.DarkEnergyHelmet=暗能量头盔
+ItemTooltip.DarkEnergyHelmet=+12 {$Mods.AuraClass.Common.Tooltips.IncreasesAuraRange}\n17% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraSpeed}
+
+ItemName.DarkEnergyBreastplate=暗能量胸甲
+ItemTooltip.DarkEnergyBreastplate=27% {$Mods.AuraClass.Common.Tooltips.IncreasedAuraDamage}
+
+ItemName.DarkEnergyLeggings=暗能量护腿
+ItemTooltip.DarkEnergyLeggings=移动速度提高 10%
+SetBonus.DarkEnergy=不使用武器时会形成一个小光环\n光环的伤害取决于你当前的生命值，生命值越低造成的伤害越低\n受到伤害后光环消失，4秒后重整
+
+ItemName.GlowHat=发光帽
+
+ItemName.GlowPants=发光衬衫
+
+ItemName.GlowShirt=发光裤
+SetBonus.Glow=+6 {$Mods.AuraClass.Common.Tooltips.IncreasesAuraRange}
+
+# Misc
+#######
+ItemName.DarkEnergyFragment=暗能量碎片
+ItemTooltip.DarkEnergyFragment='虚空的本质在这个片段中徘徊'
+
+ItemName.MushroomPowder=夜光粉
+ItemTooltip.MushroomPowder=传播真菌
+
+# Projectiles
+#######
+
+# NPCs
+#######
+NPCName.FragmentationSlime=碎裂史莱姆
+NPCName.FragmentSlime=碎片史莱姆
+Common.Slime.SlimeSolar=太阳能史莱姆
+Common.Slime.SlimeVortex=漩涡史莱姆
+Common.Slime.SlimeNebula=星云史莱姆
+Common.Slime.SlimeStardust=星尘史莱姆
+Common.Slime.SlimeDarkEnergy=暗能量史莱姆
+
+# Prefixes
+#######
+Prefix.Relentless=狠
+Prefix.Empowered=赋能
+Prefix.Energized=通电
+Prefix.Menacing=来势汹汹
+Prefix.Lively=活泼
+Prefix.Compact=袖珍的
+Prefix.Fading=衰退
+Prefix.Unsynthesized=未合成
+
+# Tooltips
+#######
+Tooltip.AuraDamage=光环
